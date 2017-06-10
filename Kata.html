@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Untitled Document.md</title><style type="text/css">
+html, body {
+    font-family: Georgia,Cambria,serif;
+    height: 100%;
+}
+html {
+    font-size: .875em;
+    background: #fff;
+    color: #373D49;
+}
+body {
+    margin: 0;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+h2, h3 {
+    line-height: 3rem;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+    -webkit-font-feature-settings: 'dlig' 1,'liga' 1,'lnum' 1,'kern' 1;
+    font-feature-settings: 'dlig' 1,'liga' 1,'lnum' 1,'kern' 1;
+    font-style: normal;
+    font-weight: 600;
+    margin-top: 0;
+}
+code, kbd, pre, samp {
+    font-family: monospace,monospace;
+}
+pre {
+    overflow: auto;
+}
+pre {
+	padding: .66001rem 9.5px 9.5px;
+    display: block;
+    margin: 0 0 10px;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #333;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+</style></head><body id="preview">
+<h3>C++ UG Dresden - 8.6.2017</h3>
+<h1>Kata Klondike</h1>
+<pre>Experiment with different heuristics for playing the solitaire game Klondike.</pre>
+
+<h3>Introduction</h3>
+<p>The solitaire game Klondike is probably the most widely played in the
+world (particularly if you’re a Window’s user, where it has been
+available since Windows 3.1). It’s a simple game.</p>
+
+<p>Cards are dealt face down onto the seven piles in the tableau. The
+first pile receives one card, the next two, up to the seventh pile,
+which not surprisingly has seven cards initially. The top card on each
+pile is turned face-up, and the undealt cards are placed on the Stock
+pile, all face down. Here’s a picture of the game (52kb) if you
+haven’t seen it before.</p>
+<p>The idea is to build up four piles of cards in their suits on the
+foundation area (one pile for the clubs, one for the diamonds, and so
+on). The piles must start with the ace and end with the king.</p>
+
+<p>The available moves (in no particular order) are:</p>
+
+<ul>
+<li><p>If the Stock becomes empty, turn the entire discard pile over and
+make it the new Stock.</p></li>
+<li><p>Turn over the top card of the Stock and place it face-up on the
+Discard pile.</p></li>
+<li><p>Move a card from the tableau or discard pile to one of the
+foundation piles. If the foundation pile is empty, only an Ace can
+be placed there, otherwise only the next highest card in the
+appropriate suit can be placed (so if a foundation pile is currently
+showing a four of hearts, only the five of hearts may be placed
+there).</p></li>
+<li><p>Move the top card of the discard pile to one of the tableau
+piles. This card must be one less in rank and opposite in color to
+the card at the top of the destination tableau.</p></li>
+<li><p>Move one or more cards from one tableau pile to another. If multiple
+cards are moved, they must be a sequence ascending in rank and
+alternating in color. The card moved (or the top of the sequence
+moved) must be one less in rank and opposite in color to the card at
+the top of the destination tableau. If the move leaves a face-down
+card to the top of the original pile, turn it over.</p></li>
+<li><p>If a move leaves a tableau pile empty, an exposed King at the top of
+a tableau or discard pile, or a sequence starting with a King on a
+tableau pile, may be moved to it.</p></li>
+</ul>
+
+
+<p>So, in the game pictured about, a possible first set of moves might be:</p>
+
+<ul>
+<li><p>Move the Queen of Diamonds onto the King of Clubs.</p></li>
+<li><p>This leaves the first pile in the tableau empty, so the combined
+King/Queen can be moved to it, and the card originally beneath the
+King is turned over.</p></li>
+<li><p>The Six of Spades can be moved on to the Seven of Diamonds,
+and the card beneath the six revealed.</p></li>
+<li><p>The top card of the stoke can be turned over and placed on the
+discard pile.</p></li>
+</ul>
+
+
+<p>The game is won when all cards are moved to the foundation, and lost
+when the only remaining moves form an endless loop.</p>
+
+<p style="page-break-after: always;">The game is simple to play, but the strategy isn’t immediately
+obvious. For example, is it always a good idea to move a card from the
+tableau to the foundation, or is it sometimes better to leave it there
+to give yourself something to build down on? Is it a good idea to make
+a move which leaves a tableau pile empty if you don’t immediately have
+a King to move into the gap? If you have two possible moves which will
+result in exposing a new tableau card, should you expose the one on
+the longest or shortest tableau?</p>
+
+
+<h3>This kata is in two parts.</h3>
+
+<ol>
+<li><p>Come up with an infrastructure so you can have the computer deal and
+play games of Klondike.</p></li>
+<li><p>Use that infrastructure to experiment with strategies to see if you
+can increase the number of times you win (perhaps you could tabulate
+the number of times the machine wins a random set of 1,000 games for
+each strategy you try).</p></li>
+</ol>
+
+
+<h3>Objectives</h3>
+
+<p>At one level, this is an exercise in design—how can the basic game be
+modeled in code? Where should the validation of moves be located (in
+the cards, in the various piles, in some kind of game overseer, or …)?
+How can we detect that we’ve lost?</p>
+
+<p>Once the basic game is in place, it becomes an exercise in
+imagination: what strategies can be applied, and how do various
+sub-strategies interact?</p>
+</div>
+
+<footer>
+    <p class="meta">
+        <span class="byline author vcard">Posted by <span class="fn">PragDave</span></span>
+        <time datetime="2013-12-10T18:44:34-06:00" pubdate data-updated="true">Dec 10<span>th</span>, 2013</time>
+    </p>
+</footer>
+
+</body></html>
