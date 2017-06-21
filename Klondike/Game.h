@@ -57,14 +57,14 @@ struct Game
 			[](size_t sum, const auto& pile) { return sum + pile.size(); });
 	}
 
-	auto topDiscardCard() const -> std::optional<Card> {
+	auto topCard(Discard) const -> std::optional<Card> {
 		if (m.discard.empty()) return {};
 		return m.discard.back();
 	}
 	
 	auto isStockEmpty() const { return m.stock.empty(); }
 
-	auto topFoundationCard(Foundation f) const -> std::optional<Card> {
+	auto topCard(Foundation f) const -> std::optional<Card> {
 		const auto& pile = m.foundations[static_cast<int>(f)];
 		if (pile.empty()) return {};
 		return pile.back();

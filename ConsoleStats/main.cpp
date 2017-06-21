@@ -22,7 +22,7 @@ std::string to_string(const Pile& pile) {
 
 void printGame(const Game& game) {
 	std::cout << "Stock:   " << (game.isStockEmpty() ? "empty" : "full") << '\n';
-	std::cout << "Discard: " << to_string(game.topDiscardCard()) << '\n';
+	std::cout << "Discard: " << to_string(game.topCard(Game::discard)) << '\n';
 	std::cout << "Tableau:\n";
 	for (auto tableau : Game::tableau) {
 		auto count = game.hiddenCardCount(tableau);
@@ -31,7 +31,7 @@ void printGame(const Game& game) {
 	}
 	std::cout << "Foundation:\n";
 	for (auto foundation : Game::foundation) {
-		auto topCard = game.topFoundationCard(foundation);
+		auto topCard = game.topCard(foundation);
 		std::cout << " - " << to_string(topCard) << '\n';
 	}
 }

@@ -9,7 +9,7 @@ void Klondike::play(Game& game)
 	while (tableauChanged || discardChanged || foundationChanged) {
 		auto success = false;
 
-		if (!game.topDiscardCard().has_value()) {
+		if (!game.topCard(Game::discard).has_value()) {
 			success = game.drawCard();
 			if (success) continue;
 			return; // probably done

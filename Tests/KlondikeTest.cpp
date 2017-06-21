@@ -29,8 +29,8 @@ TEST(Klondike, drawCard) {
 
 	EXPECT_TRUE(game.isStockEmpty());
 	using namespace testing;
-	EXPECT_TRUE(game.topDiscardCard().has_value());
-	EXPECT_THAT(game.topDiscardCard().value(), Eq(state.stock.back()));
+	EXPECT_TRUE(game.topCard(Game::discard).has_value());
+	EXPECT_THAT(game.topCard(Game::discard).value(), Eq(state.stock.back()));
 
 	success = game.drawCard();
 	EXPECT_FALSE(success);
@@ -47,14 +47,14 @@ TEST(Klondike, turnDiscardPileToStock) {
 	EXPECT_TRUE(success);
 
 	EXPECT_FALSE(game.isStockEmpty());
-	EXPECT_FALSE(game.topDiscardCard().has_value());
+	EXPECT_FALSE(game.topCard(Game::discard).has_value());
 
 	// check that first card drawn is first discarded card
 	success = game.drawCard();
 	EXPECT_TRUE(success);
-	EXPECT_TRUE(game.topDiscardCard().has_value());
+	EXPECT_TRUE(game.topCard(Game::discard).has_value());
 	using namespace testing;
-	EXPECT_THAT(game.topDiscardCard().value(), Eq(state.discard.front()));
+	EXPECT_THAT(game.topCard(Game::discard).value(), Eq(state.discard.front()));
 }
 
 TEST(Klondike, moveDiscardToTableau) {
@@ -152,8 +152,8 @@ TEST(Klondike, moveFoundationToFoundation) {
 	auto moved = game.moveCard(Game::foundation[0], Game::foundation[1]);
 	EXPECT_TRUE(moved);
 
-	EXPECT_FALSE(game.topFoundationCard(Game::foundation[0]).has_value());
-	EXPECT_TRUE(game.topFoundationCard(Game::foundation[1]).has_value());
+	EXPECT_FALSE(game.topCard(Game::foundation[0]).has_value());
+	EXPECT_TRUE(game.topCard(Game::foundation[1]).has_value());
 }
 
 TEST(Klondike, moveEmptyFoundationToFoundation) {
@@ -163,6 +163,6 @@ TEST(Klondike, moveEmptyFoundationToFoundation) {
 	auto moved = game.moveCard(Game::foundation[0], Game::foundation[1]);
 	EXPECT_FALSE(moved);
 
-	EXPECT_FALSE(game.topFoundationCard(Game::foundation[0]).has_value());
-	EXPECT_FALSE(game.topFoundationCard(Game::foundation[1]).has_value());
+	EXPECT_FALSE(game.topCard(Game::foundation[0]).has_value());
+	EXPECT_FALSE(game.topCard(Game::foundation[1]).has_value());
 }
