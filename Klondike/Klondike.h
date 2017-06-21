@@ -1,5 +1,6 @@
 #pragma once
+#include "Game.h"
 
 struct Klondike {
-	int test();
+	static void play(Game& game);
 };

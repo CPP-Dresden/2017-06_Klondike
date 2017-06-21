@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Klondike", "Klondike\Klondike.vcxproj", "{451F109C-589D-4532-A735-5315A0D8863C}"
 EndProject
@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tests", "Tests\Tests.vcxpro
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gmock", "googletest-1.8.0\googlemock\msvc\2015\gmock.vcxproj", "{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleStats", "ConsoleStats\ConsoleStats.vcxproj", "{4C733755-C38C-436D-AFD8-046FF3964647}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,14 @@ Global
 		{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}.Release|x64.ActiveCfg = Release|Win32
 		{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}.Release|x86.ActiveCfg = Release|Win32
 		{34681F0D-CE45-415D-B5F2-5C662DFE3BD5}.Release|x86.Build.0 = Release|Win32
+		{4C733755-C38C-436D-AFD8-046FF3964647}.Debug|x64.ActiveCfg = Debug|x64
+		{4C733755-C38C-436D-AFD8-046FF3964647}.Debug|x64.Build.0 = Debug|x64
+		{4C733755-C38C-436D-AFD8-046FF3964647}.Debug|x86.ActiveCfg = Debug|Win32
+		{4C733755-C38C-436D-AFD8-046FF3964647}.Debug|x86.Build.0 = Debug|Win32
+		{4C733755-C38C-436D-AFD8-046FF3964647}.Release|x64.ActiveCfg = Release|x64
+		{4C733755-C38C-436D-AFD8-046FF3964647}.Release|x64.Build.0 = Release|x64
+		{4C733755-C38C-436D-AFD8-046FF3964647}.Release|x86.ActiveCfg = Release|Win32
+		{4C733755-C38C-436D-AFD8-046FF3964647}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

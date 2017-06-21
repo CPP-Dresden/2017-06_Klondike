@@ -4,44 +4,83 @@
 
 #include <array>
 #include <vector>
+#include <optional>
+#include <algorithm>
+#include <numeric>
 
 using Pile = std::vector<Card>;
-
-struct GamePiles {
-	Pile m_discardPile;
-	Pile m_stock;
-	std::array<Pile, 7> m_tableauPiles;
-	std::array<Pile, 4> m_foundationPiles;
+struct TableauPile {
+	Pile hidden;
+	Pile visible;
 };
 
-class Game
+struct Game
 {
-public:
+	struct State {
+		Pile discard;
+		Pile stock;
+		std::array<TableauPile, 7> tableaus;
+		std::array<Pile, 4> foundations;
+	};
+	static bool isValid(const State& state);
+
+	enum class Discard {};
+	static constexpr const Discard discard = static_cast<Discard>(0);
+
 	enum class Tableau { One, Two, Three, Four, Five, Six, Seven };
+	static constexpr const std::array<Tableau, 7> tableau = { Tableau::One, Tableau::Two, Tableau::Three, Tableau::Four, Tableau::Five, Tableau::Six, Tableau::Seven };
+
 	enum class Foundation { One, Two, Three, Four };
+	static constexpr const std::array<Foundation, 4> foundation = { Foundation::One, Foundation::Two, Foundation::Three, Foundation::Four };
 
-	Game(const GamePiles& piles);
-	~Game();
+	static auto CreateRandomized() -> Game;
 
-	//void restart();
+	static auto CreateRandomizedState() -> State; // valid game state with cards on tableaus
+	static auto CreateRandomizedStockState() -> State; // cards in stock are shuffled randomly
+	static auto CreateOrderedStockState() -> State; // valid game state with all cards in stock
 
+	static auto FromState(State&& state) -> std::optional<Game> {
+		if (!isValid(state)) return {};
+		Game game;
+		game.m = std::move(state);
+		return game;
+	}
+
+	auto isValid() const { return isValid(m); }
+
+	auto isWon() const {
+		return 52 == std::accumulate(
+			m.foundations.begin(), m.foundations.end(), 
+			0, 
+			[](size_t sum, const auto& pile) { return sum + pile.size(); });
+	}
+
+	auto topDiscardCard() const -> std::optional<Card> {
+		if (m.discard.empty()) return {};
+		return m.discard.back();
+	}
+	
+	auto isStockEmpty() const { return m.stock.empty(); }
+
+	auto topFoundationCard(Foundation f) const -> std::optional<Card> {
+		const auto& pile = m.foundations[static_cast<int>(f)];
+		if (pile.empty()) return {};
+		return pile.back();
+	}
+	
+	auto visibleCards(Tableau t) const { return m.tableaus[static_cast<int>(t)].visible; }	
+	auto hiddenCardCount(Tableau t) const { return m.tableaus[static_cast<int>(t)].hidden.size(); }
+
+	// moves (return true if successfully executed, false if invalid)
+	bool drawCard();
 	bool turnDiscardPileToStock();
-	bool drawFromStock();
-	//bool moveFromDiscardToTableau(Tableau);
-	//bool moveFromDiscardToFoundation(Foundation);
-	//bool moveFromTableauToTableau(int n, Tableau from, Tableau to);
-	//bool moveFromTableauToFoundation(Tableau from, Foundation to);
-	//bool moveFromFoundationToTableau(Foundation from, Tableau to); // not allowed
-	bool moveFromFoundationToFoundation(Foundation from, Foundation to);
 
-	//bool isWon() const;
-
-	GamePiles getState() const;
-
-	static std::array<Tableau, 7> tableau() { return { Tableau::One, Tableau::Two, Tableau::Three, Tableau::Four, Tableau::Five, Tableau::Six, Tableau::Seven }; }
-	static std::array<Foundation, 4> foundation() { return { Foundation::One, Foundation::Two, Foundation::Three, Foundation::Four }; }
+	bool moveCard(Discard, Tableau t);
+	bool moveCard(Discard, Foundation f);
+	bool moveCard(Tableau from, Foundation to);
+	bool moveCards(Tableau from, Tableau to, int n = 1);
+	bool moveCard(Foundation from, Foundation to);
 
 private:
-	GamePiles m_piles;
+	State m;
 };
-
