@@ -39,7 +39,7 @@ void Klondike::play(Game& game)
 			}
 
 			// try to move cards left
-			for (int from = 6; from > 1; from--) {
+			for (int from = Game::TableauPiles - 1; from > 1; from--) {
 				auto fromVisible = game.visibleCards(Game::tableau[from]);
 				for (int to = 0; to < from; to++) {
 					success = game.moveCards(Game::tableau[from], Game::tableau[to], fromVisible.size());

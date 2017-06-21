@@ -9,5 +9,13 @@
     <ClInclude Include="Klondike.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Meta\SkipFirst.h">
+      <Filter>Meta</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Meta">
+      <UniqueIdentifier>{45165caa-98ad-4c28-a118-2543aab31454}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -16,11 +16,13 @@ struct TableauPile {
 
 struct Game
 {
+	enum { TableauPiles = 7, FoundationPiles = Card::SymbolCount };
+
 	struct State {
 		Pile discard;
 		Pile stock;
-		std::array<TableauPile, 7> tableaus;
-		std::array<Pile, 4> foundations;
+		std::array<TableauPile, TableauPiles> tableaus;
+		std::array<Pile, FoundationPiles> foundations;
 	};
 	static bool isValid(const State& state);
 
@@ -28,10 +30,10 @@ struct Game
 	static constexpr const Discard discard = static_cast<Discard>(0);
 
 	enum class Tableau { One, Two, Three, Four, Five, Six, Seven };
-	static constexpr const std::array<Tableau, 7> tableau = { Tableau::One, Tableau::Two, Tableau::Three, Tableau::Four, Tableau::Five, Tableau::Six, Tableau::Seven };
+	static constexpr const std::array<Tableau, TableauPiles> tableau = { Tableau::One, Tableau::Two, Tableau::Three, Tableau::Four, Tableau::Five, Tableau::Six, Tableau::Seven };
 
 	enum class Foundation { One, Two, Three, Four };
-	static constexpr const std::array<Foundation, 4> foundation = { Foundation::One, Foundation::Two, Foundation::Three, Foundation::Four };
+	static constexpr const std::array<Foundation, FoundationPiles> foundation = { Foundation::One, Foundation::Two, Foundation::Three, Foundation::Four };
 
 	static auto CreateRandomized() -> Game;
 
@@ -49,7 +51,7 @@ struct Game
 	auto isValid() const { return isValid(m); }
 
 	auto isWon() const {
-		return 52 == std::accumulate(
+		return Card::Total == std::accumulate(
 			m.foundations.begin(), m.foundations.end(), 
 			0, 
 			[](size_t sum, const auto& pile) { return sum + pile.size(); });

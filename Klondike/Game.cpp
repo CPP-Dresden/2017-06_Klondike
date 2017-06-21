@@ -1,56 +1,10 @@
 #include "Game.h"
 
+#include "Meta/SkipFirst.h"
+
 #include <random>
 
 namespace {
-
-	template<class Container>
-	struct SkipFirstView {
-		using value_type = typename Container::value_type;
-		using size_type = typename Container::size_type;
-		using difference_type = typename Container::difference_type;
-		using pointer = typename Container::pointer;
-		using const_pointer = typename Container::const_pointer;
-		using reference = typename Container::reference;
-		using const_reference = typename Container::const_reference;
-
-		using iterator = typename Container::iterator;
-		using const_iterator = typename Container::const_iterator;
-
-		//using reverse_iterator = typename Container::reverse_iterator;
-		//using const_reverse_iterator = typename Container::const_reverse_iterator;
-
-		SkipFirstView(Container& c) : m_c(c) {}
-
-		auto begin() {
-			auto it = m_c.begin();
-			if (it != m_c.end()) it++;
-			return it;
-		}
-		auto begin() const {
-			auto it = m_c.begin();
-			if (it != m_c.end()) it++;
-			return it;
-		}
-		auto cbegin() const {
-			auto it = m_c.begin();
-			if (it != m_c.end()) it++;
-			return it;
-		}
-
-		auto end() { return m_c.end(); }
-		auto end() const { return m_c.end(); }
-		auto cend() const { return m_c.cend(); }
-
-	private:
-		Container& m_c;
-	};
-
-	template<class Container>
-	auto skipFirst(Container& c) {
-		return SkipFirstView<Container>(c);
-	}
-
 	bool canAddCardToTableau(const Card& card, const Pile& toPile) {
 		if (toPile.empty()) {
 			return card.rank() == CardRank::King;
@@ -159,7 +113,7 @@ auto Game::CreateOrderedStockState() -> State
 {
 	State state;
 	auto& stock = state.stock;
-	stock.resize(52);
+	stock.resize(Card::Total);
 	std::generate(stock.begin(), stock.end(), [id = 0]() mutable { return Card::FromId(id++); });
 	return state;
 }

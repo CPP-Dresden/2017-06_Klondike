@@ -24,6 +24,8 @@ inline constexpr auto next(CardRank rank) {
 
 struct Card
 {
+	enum { SymbolCount = 4, RankCount = 13, Total = SymbolCount * RankCount };
+
 	constexpr Card() = default;
 	constexpr Card(const Card&) = default;
 	constexpr Card& operator= (const Card&) = default;
@@ -34,8 +36,8 @@ struct Card
 		: m_symbol(symbol), m_rank(rank) {}
 
 	constexpr static auto FromId(int id) {
-		assert(id >= 0 && id < 52);
-		return Card{ static_cast<CardSymbol>(id / 13), static_cast<CardRank>(id % 13) };
+		assert(id >= 0 && id < Total);
+		return Card{ static_cast<CardSymbol>(id / RankCount), static_cast<CardRank>(id % RankCount) };
 	}
 
 	constexpr auto operator==(const Card& o) const {
@@ -48,7 +50,7 @@ struct Card
 	constexpr auto isBlack() const { return m_symbol == CardSymbol::Clubs || m_symbol == CardSymbol::Spades; }
 	constexpr auto isRed() const { return !isBlack(); }
 
-	constexpr auto id() const { return static_cast<int>(m_symbol) * 13 + static_cast<int>(m_rank); }
+	constexpr auto id() const { return static_cast<int>(m_symbol) * RankCount + static_cast<int>(m_rank); }
 
 private:
 	CardSymbol m_symbol = CardSymbol::Clubs;
