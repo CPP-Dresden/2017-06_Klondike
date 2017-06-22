@@ -1,48 +1,21 @@
 #include "Game.h"
 
-
-Game::Game(const GamePiles & piles) :
-	m_piles(piles)
-{
-}
-
-Game::~Game()
-{
-}
-
-bool Game::turnDiscardPileToStock()
-{
-	if (!m_piles.m_stock.empty()) return false;
-	if (m_piles.m_discardPile.empty()) return false;
-
-	std::swap(m_piles.m_discardPile, m_piles.m_stock);
-	
-	//revert order for discard pile
-	std::reverse(m_piles.m_stock.begin(), m_piles.m_stock.end());
-	std::for_each(m_piles.m_stock.begin(), m_piles.m_stock.end(), [](Card& card) {card.setStatus(Card::Status::DOWN); });
-	return true;
-}
-
-bool Game::drawFromStock()
-{
-	if (m_piles.m_stock.empty()) return false;
-	
-	m_piles.m_discardPile.push_back(m_piles.m_stock.back());
-	m_piles.m_stock.pop_back();
-
-	return true;
-}
-
-bool Game::moveFromFoundationToFoundation(Foundation from, Foundation to)
-{
-	if (m_piles.m_foundationPiles[(int)from].size() == 1 && m_piles.m_foundationPiles[(int)to].size() == 0) {
-		std::swap(m_piles.m_foundationPiles[(int)to], m_piles.m_foundationPiles[(int)from]);
-		return true;
-	}
-	return false;
-}
-
-GamePiles Game::getState() const
-{
-	return m_piles;
-}
+Game::Game(StartPiles && piles)
+	: discardPile(std::move(piles.discardPile), this)
+	, stockPile(std::move(piles.stock), this)
+	, tableauPiles({ 
+		TableauPile(std::move(piles.tableauHiddenPiles[0]), std::move(piles.tableauVisiblePiles[0]), this),
+		TableauPile(std::move(piles.tableauHiddenPiles[1]), std::move(piles.tableauVisiblePiles[1]), this),
+		TableauPile(std::move(piles.tableauHiddenPiles[2]), std::move(piles.tableauVisiblePiles[2]), this),
+		TableauPile(std::move(piles.tableauHiddenPiles[3]), std::move(piles.tableauVisiblePiles[3]), this),
+		TableauPile(std::move(piles.tableauHiddenPiles[4]), std::move(piles.tableauVisiblePiles[4]), this),
+		TableauPile(std::move(piles.tableauHiddenPiles[5]), std::move(piles.tableauVisiblePiles[5]), this),
+		TableauPile(std::move(piles.tableauHiddenPiles[6]), std::move(piles.tableauVisiblePiles[6]), this),
+})	
+, foundationPiles({
+	FoundationPile(std::move(piles.foundationPiles[0]), this),
+	FoundationPile(std::move(piles.foundationPiles[1]), this),
+	FoundationPile(std::move(piles.foundationPiles[2]), this),
+	FoundationPile(std::move(piles.foundationPiles[3]), this),
+})
+{}

@@ -4,10 +4,45 @@
     <ClCompile Include="Klondike.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="BasePile.cpp">
+      <Filter>Piles</Filter>
+    </ClCompile>
+    <ClCompile Include="DiscardPile.cpp">
+      <Filter>Piles</Filter>
+    </ClCompile>
+    <ClCompile Include="FoundationPile.cpp">
+      <Filter>Piles</Filter>
+    </ClCompile>
+    <ClCompile Include="StockPile.cpp">
+      <Filter>Piles</Filter>
+    </ClCompile>
+    <ClCompile Include="TableauPile.cpp">
+      <Filter>Piles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Klondike.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="BasePile.h">
+      <Filter>Piles</Filter>
+    </ClInclude>
+    <ClInclude Include="DiscardPile.h">
+      <Filter>Piles</Filter>
+    </ClInclude>
+    <ClInclude Include="FoundationPile.h">
+      <Filter>Piles</Filter>
+    </ClInclude>
+    <ClInclude Include="StockPile.h">
+      <Filter>Piles</Filter>
+    </ClInclude>
+    <ClInclude Include="TableauPile.h">
+      <Filter>Piles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Piles">
+      <UniqueIdentifier>{c78acbbb-2e7a-4e02-bf83-1da661cb6ef4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
