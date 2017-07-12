@@ -54,6 +54,8 @@ inline bool Game::isValid(const State & state) {
 	for (const auto& tableau : state.tableaus) {
 		if (tableau.visible.empty()) continue;
 		auto last = tableau.visible.front();
+		// we do not know if this is the last hidden card revealed !
+		//if (tableau.hidden.empty() && last.rank != CardRank::King) return false;
 		for (const Card& card : skipFirst(tableau.visible)) {
 			if (card.isBlack() == last.isBlack()) return false; // alternate colors
 			if (next(card.rank()) != last.rank()) return false; // increasing rank
