@@ -28,7 +28,7 @@ namespace {
 
 inline bool Game::isValid(const State & state) {
 	// each card exists once
-	std::array<bool, 52> cardSeen;
+	std::array<bool, Card::Total> cardSeen;
 	cardSeen.fill(false);
 	for (const auto* pile : {
 		&state.discard, &state.stock,
