@@ -17,7 +17,7 @@ TEST(Klondike, RandomizedState) {
 }
 
 TEST(Klondike, drawCard) {
-	Game::State state = Game::CreateOrderedStockState();
+	auto state = Game::CreateOrderedStockState();
 	std::swap(state.stock, state.discard);
 	state.stock.push_back(state.discard.back()); state.discard.pop_back();
 	auto game = Game::FromState(Game::State{ state }).value();
@@ -37,7 +37,7 @@ TEST(Klondike, drawCard) {
 }
 
 TEST(Klondike, turnDiscardPileToStock) {
-	Game::State state = Game::CreateOrderedStockState();
+	auto state = Game::CreateOrderedStockState();
 	std::swap(state.stock, state.discard); // move all cards to discard
 	auto game = Game::FromState(Game::State{ state }).value();
 
@@ -58,7 +58,7 @@ TEST(Klondike, turnDiscardPileToStock) {
 }
 
 TEST(Klondike, moveDiscardToTableau) {
-	Game::State state = Game::CreateOrderedStockState();
+	auto state = Game::CreateOrderedStockState();
 	std::swap(state.stock, state.discard); // move all cards to discard
 	std::swap(*(state.discard.end() - 2), *(state.discard.end() - 15)); // get queen with other color
 	auto game = Game::FromState(Game::State{ state }).value();
@@ -80,7 +80,7 @@ TEST(Klondike, moveDiscardToTableau) {
 }
 
 TEST(Klondike, moveDiscardToFoundation) {
-	Game::State state = Game::CreateOrderedStockState();
+	auto state = Game::CreateOrderedStockState();
 	std::reverse(state.stock.begin(), state.stock.end());
 	std::swap(state.stock, state.discard); // move all cards to discard
 	std::swap(*(state.discard.end() - 3), *(state.discard.end() - 16)); // get 3 with other color
@@ -100,7 +100,7 @@ TEST(Klondike, moveDiscardToFoundation) {
 }
 
 TEST(Klondike, moveTableauToFoundation) {
-	Game::State state = Game::CreateOrderedStockState();
+	auto state = Game::CreateOrderedStockState();
 	std::reverse(state.stock.begin(), state.stock.end());
 	state.tableaus[0].hidden.push_back(state.stock[13 + 10]); state.stock.erase(state.stock.begin() + 13 + 10); // hearts 3
 	state.tableaus[0].visible.push_back(state.stock.back()); state.stock.pop_back(); // clubs ace
@@ -124,11 +124,11 @@ TEST(Klondike, moveTableauToFoundation) {
 	EXPECT_TRUE(success); // clubs 2
 
 	success = game.moveCard(Game::tableau[0], Game::foundation[0]);
-	EXPECT_FALSE(success); // hearts 3 (not matching)
+	EXPECT_FALSE(success); // hearts 3 (not matching symbol)
 }
 
 TEST(Klondike, moveTableauToTableau) {
-	Game::State state = Game::CreateOrderedStockState();
+	auto state = Game::CreateOrderedStockState();
 	std::reverse(state.stock.begin(), state.stock.end());
 	state.tableaus[0].visible.push_back(state.stock[13 + 11]); state.stock.erase(state.stock.begin() + 13 + 11); // hearts 2
 	state.tableaus[0].visible.push_back(state.stock.back()); state.stock.pop_back(); // clubs ace
@@ -144,7 +144,7 @@ TEST(Klondike, moveTableauToTableau) {
 }
 
 TEST(Klondike, moveFoundationToFoundation) {
-	Game::State state = Game::CreateOrderedStockState();
+	auto state = Game::CreateOrderedStockState();
 	std::reverse(state.stock.begin(), state.stock.end());
 	state.foundations[0].push_back(state.stock.back()); state.stock.pop_back();
 	auto game = Game::FromState(Game::State{ state }).value();
@@ -157,7 +157,7 @@ TEST(Klondike, moveFoundationToFoundation) {
 }
 
 TEST(Klondike, moveEmptyFoundationToFoundation) {
-	Game::State state = Game::CreateOrderedStockState();
+	auto state = Game::CreateOrderedStockState();
 	auto game = Game::FromState(Game::State{ state }).value();
 
 	auto moved = game.moveCard(Game::foundation[0], Game::foundation[1]);
