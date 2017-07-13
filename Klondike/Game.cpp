@@ -26,7 +26,7 @@ namespace {
 	}
 }
 
-inline bool Game::isValid(const State & state) {
+bool Game::isValid(const State & state) {
 	// each card exists once
 	std::array<bool, Card::Total> cardSeen;
 	cardSeen.fill(false);

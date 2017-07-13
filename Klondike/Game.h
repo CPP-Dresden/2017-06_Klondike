@@ -41,37 +41,37 @@ struct Game
 	static auto CreateRandomizedStockState() -> State; // cards in stock are shuffled randomly
 	static auto CreateOrderedStockState() -> State; // valid game state with all cards in stock
 
-	static auto FromState(State&& state) -> std::optional<Game> {
+	static inline auto FromState(State&& state) -> std::optional<Game> {
 		if (!isValid(state)) return {};
 		Game game;
 		game.m = std::move(state);
 		return game;
 	}
 
-	auto isValid() const { return isValid(m); }
+	inline auto isValid() const { return isValid(m); }
 
-	auto isWon() const {
+	inline auto isWon() const {
 		return Card::Total == std::accumulate(
 			m.foundations.begin(), m.foundations.end(), 
 			0, 
 			[](size_t sum, const auto& pile) { return sum + pile.size(); });
 	}
 
-	auto topCard(Discard) const -> std::optional<Card> {
+	inline auto topCard(Discard) const -> std::optional<Card> {
 		if (m.discard.empty()) return {};
 		return m.discard.back();
 	}
 	
-	auto isStockEmpty() const { return m.stock.empty(); }
+	inline auto isStockEmpty() const { return m.stock.empty(); }
 
-	auto topCard(Foundation f) const -> std::optional<Card> {
+	inline auto topCard(Foundation f) const -> std::optional<Card> {
 		const auto& pile = m.foundations[static_cast<int>(f)];
 		if (pile.empty()) return {};
 		return pile.back();
 	}
 	
-	auto visibleCards(Tableau t) const { return m.tableaus[static_cast<int>(t)].visible; }	
-	auto hiddenCardCount(Tableau t) const { return m.tableaus[static_cast<int>(t)].hidden.size(); }
+	inline auto visibleCards(Tableau t) const { return m.tableaus[static_cast<int>(t)].visible; }
+	inline auto hiddenCardCount(Tableau t) const { return m.tableaus[static_cast<int>(t)].hidden.size(); }
 
 	// moves (return true if successfully executed, false if invalid)
 	bool drawCard();
